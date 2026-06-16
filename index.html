@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CODE : STORGE (웹 변환 테스트)</title>
+<title>CODE : STORGE</title>
 
 <style>
 
@@ -16,45 +15,79 @@
 
 body{
     background:#111;
-    overflow:hidden;
+    color:white;
     font-family:sans-serif;
+    overflow:hidden;
 }
 
-#scene{
+#game{
     width:100vw;
     height:100vh;
     position:relative;
-    background:#222;
+}
+
+#scene{
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:20px;
+}
+
+.title{
+
+    font-size:48px;
+    font-weight:bold;
+
+    margin-bottom:20px;
+}
+
+.subtitle{
+
+    opacity:.8;
+    margin-bottom:40px;
+}
+
+button{
+
+    padding:15px 25px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    margin:5px;
+
+    font-size:16px;
 }
 
 .object{
-    position:absolute;
 
-    width:120px;
+    width:180px;
     height:120px;
 
     border:3px solid white;
 
     display:flex;
-    align-items:center;
+
     justify-content:center;
+    align-items:center;
 
-    text-align:center;
-
-    color:white;
-    font-weight:bold;
-
-    cursor:pointer;
+    margin:10px;
 
     border-radius:12px;
 
-    user-select:none;
-
-    transition:.2s;
-}
-
-.object:hover{
-    transform:scale(1.05);
+    cursor:pointer;
 }
 
 #dialog{
@@ -67,152 +100,306 @@ body{
     transform:translateX(-50%);
 
     width:90%;
-    max-width:900px;
 
-    min-height:80px;
-
-    background:rgba(0,0,0,.8);
-
-    color:white;
+    background:rgba(0,0,0,.7);
 
     padding:15px;
 
     border-radius:10px;
+
+    text-align:center;
 }
 
-#sceneName{
+.room{
 
-    position:absolute;
-
-    top:10px;
-    left:10px;
-
-    color:white;
-
-    font-size:20px;
-
-    background:rgba(0,0,0,.6);
-
-    padding:8px 12px;
-
-    border-radius:8px;
-}
-
-#nextScene{
-
-    position:absolute;
-
-    top:10px;
-    right:10px;
-
-    padding:10px 15px;
-
-    border:none;
-
-    border-radius:8px;
-
-    cursor:pointer;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
 }
 
 </style>
 </head>
 <body>
 
-<div id="scene">
+<div id="game">
 
-    <div id="sceneName">인트로</div>
-
-    <button id="nextScene">
-        다음 씬
-    </button>
-
-    <div class="object"
-         style="left:10%;top:20%;background:#e74c3c;"
-         data-name="박스">
-        박스
-    </div>
-
-    <div class="object"
-         style="left:40%;top:25%;background:#3498db;"
-         data-name="서랍">
-        서랍
-    </div>
-
-    <div class="object"
-         style="left:70%;top:20%;background:#27ae60;"
-         data-name="카펫">
-        카펫
-    </div>
-
-    <div class="object"
-         style="left:20%;top:55%;background:#9b59b6;"
-         data-name="종이">
-        종이
-    </div>
-
-    <div class="object"
-         style="left:60%;top:55%;background:#f39c12;"
-         data-name="문">
-        문
-    </div>
+    <div id="scene"></div>
 
     <div id="dialog">
-        CODE : STORGE 웹 변환 테스트
+        CODE : STORGE
     </div>
 
 </div>
 
 <script>
 
-const scenes = [
-    "인트로",
-    "스토리",
-    "게임",
-    "방탈출",
-    "챕터2",
-    "엔딩"
-];
+let state={
 
-let sceneIndex = 0;
+    drawerOpened:false,
+    paperFound:false,
+    boxOpened:false,
+    capsuleFound:false
+
+};
+
+const scene =
+document.getElementById("scene");
 
 const dialog =
 document.getElementById("dialog");
 
-document
-.querySelectorAll(".object")
-.forEach(obj=>{
+function say(text){
 
-    obj.addEventListener("click",()=>{
+    dialog.innerHTML=text;
 
-        const name =
-        obj.dataset.name;
+}
 
-        dialog.innerHTML =
-        "<b>"+name+"</b> 을(를) 클릭했습니다.";
+function intro(){
 
-    });
+scene.innerHTML=`
 
-});
+<div class="title">
+CODE : STORGE
+</div>
 
-document
-.getElementById("nextScene")
-.addEventListener("click",()=>{
+<div class="subtitle">
+TO YOU, BEYOND TIME
+</div>
 
-    sceneIndex++;
+<button onclick="story()">
+시작하기
+</button>
 
-    if(sceneIndex >= scenes.length)
-        sceneIndex = 0;
+`;
 
-    document.getElementById(
-        "sceneName"
-    ).textContent =
-    scenes[sceneIndex];
+}
 
-    dialog.innerHTML =
-    scenes[sceneIndex] +
-    " 씬으로 이동했습니다.";
+function story(){
 
-});
+scene.innerHTML=`
+
+<h1>성별 선택</h1>
+
+<br>
+
+<button onclick="gameStory()">
+남자
+</button>
+
+<button onclick="gameStory()">
+여자
+</button>
+
+`;
+
+say("성별을 선택하세요.");
+
+}
+
+function gameStory(){
+
+scene.innerHTML=`
+
+<h1>스토리</h1>
+
+<p>
+당신은 낯선 공간에 떨어졌다.
+</p>
+
+<br>
+
+<button onclick="falling()">
+다음
+</button>
+
+`;
+
+}
+
+function falling(){
+
+scene.innerHTML=`
+
+<h1>떨어진다!!</h1>
+
+<h3>...</h3>
+
+`;
+
+say("어딘가로 떨어지는 중...");
+
+setTimeout(()=>{
+
+escapeRoom();
+
+},2000);
+
+}
+
+function escapeRoom(){
+
+scene.innerHTML=`
+
+<h1>방탈출</h1>
+
+<div class="room">
+
+<div class="object"
+onclick="clickDrawer()">
+서랍
+</div>
+
+<div class="object"
+onclick="clickPaper()">
+구겨진 종이
+</div>
+
+<div class="object"
+onclick="clickBox()">
+박스
+</div>
+
+<div class="object"
+onclick="clickDoor()">
+문
+</div>
+
+</div>
+
+`;
+
+say("방을 조사해 보자.");
+
+}
+
+function clickDrawer(){
+
+let pw =
+prompt("서랍 비밀번호");
+
+if(pw==="2880"){
+
+state.drawerOpened=true;
+
+say("서랍이 열렸다.");
+
+}else{
+
+say("틀렸다.");
+
+}
+
+}
+
+function clickPaper(){
+
+if(!state.drawerOpened){
+
+say("먼저 서랍을 열어야 한다.");
+
+return;
+
+}
+
+state.paperFound=true;
+
+say(`
+힌트 :
+
+1. 각 색을 글자로 나타낼 때의 글자 수
+
+2. ABCD = A×B×C×D
+`);
+
+}
+
+function clickBox(){
+
+if(!state.paperFound){
+
+say("힌트가 필요할 것 같다.");
+
+return;
+
+}
+
+state.boxOpened=true;
+
+state.capsuleFound=true;
+
+say("박스 안에서 캡슐을 발견했다.");
+
+}
+
+function clickDoor(){
+
+if(!state.capsuleFound){
+
+say("아직 탈출할 수 없다.");
+
+return;
+
+}
+
+scene.innerHTML=`
+
+<h1>탈출 성공</h1>
+
+<p>
+방을 탈출했다.
+</p>
+
+<br>
+
+<button onclick="chapter2()">
+다음
+</button>
+
+`;
+
+}
+
+function chapter2(){
+
+scene.innerHTML=`
+
+<h1>비밀 메시지</h1>
+
+<p>
+CODE : STORGE
+</p>
+
+<br>
+
+<button onclick="ending()">
+예
+</button>
+
+<button onclick="ending()">
+아니오
+</button>
+
+`;
+
+}
+
+function ending(){
+
+scene.innerHTML=`
+
+<h1>THE END</h1>
+
+<p>
+플레이해 주셔서 감사합니다.
+</p>
+
+`;
+
+say("엔딩");
+
+}
+
+intro();
 
 </script>
 
