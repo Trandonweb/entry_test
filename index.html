@@ -1,12 +1,220 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CODE : STORGE (웹 변환 테스트)</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#111;
+    overflow:hidden;
+    font-family:sans-serif;
+}
+
+#scene{
+    width:100vw;
+    height:100vh;
+    position:relative;
+    background:#222;
+}
+
+.object{
+    position:absolute;
+
+    width:120px;
+    height:120px;
+
+    border:3px solid white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    color:white;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    border-radius:12px;
+
+    user-select:none;
+
+    transition:.2s;
+}
+
+.object:hover{
+    transform:scale(1.05);
+}
+
+#dialog{
+
+    position:absolute;
+
+    left:50%;
+    bottom:20px;
+
+    transform:translateX(-50%);
+
+    width:90%;
+    max-width:900px;
+
+    min-height:80px;
+
+    background:rgba(0,0,0,.8);
+
+    color:white;
+
+    padding:15px;
+
+    border-radius:10px;
+}
+
+#sceneName{
+
+    position:absolute;
+
+    top:10px;
+    left:10px;
+
+    color:white;
+
+    font-size:20px;
+
+    background:rgba(0,0,0,.6);
+
+    padding:8px 12px;
+
+    border-radius:8px;
+}
+
+#nextScene{
+
+    position:absolute;
+
+    top:10px;
+    right:10px;
+
+    padding:10px 15px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+}
+
+</style>
+</head>
 <body>
 
-<iframe
-width="640"
-height="420"
-src="https://playentry.org/iframe/675427f28490cf05ec80922d">
-</iframe>
+<div id="scene">
+
+    <div id="sceneName">인트로</div>
+
+    <button id="nextScene">
+        다음 씬
+    </button>
+
+    <div class="object"
+         style="left:10%;top:20%;background:#e74c3c;"
+         data-name="박스">
+        박스
+    </div>
+
+    <div class="object"
+         style="left:40%;top:25%;background:#3498db;"
+         data-name="서랍">
+        서랍
+    </div>
+
+    <div class="object"
+         style="left:70%;top:20%;background:#27ae60;"
+         data-name="카펫">
+        카펫
+    </div>
+
+    <div class="object"
+         style="left:20%;top:55%;background:#9b59b6;"
+         data-name="종이">
+        종이
+    </div>
+
+    <div class="object"
+         style="left:60%;top:55%;background:#f39c12;"
+         data-name="문">
+        문
+    </div>
+
+    <div id="dialog">
+        CODE : STORGE 웹 변환 테스트
+    </div>
+
+</div>
+
+<script>
+
+const scenes = [
+    "인트로",
+    "스토리",
+    "게임",
+    "방탈출",
+    "챕터2",
+    "엔딩"
+];
+
+let sceneIndex = 0;
+
+const dialog =
+document.getElementById("dialog");
+
+document
+.querySelectorAll(".object")
+.forEach(obj=>{
+
+    obj.addEventListener("click",()=>{
+
+        const name =
+        obj.dataset.name;
+
+        dialog.innerHTML =
+        "<b>"+name+"</b> 을(를) 클릭했습니다.";
+
+    });
+
+});
+
+document
+.getElementById("nextScene")
+.addEventListener("click",()=>{
+
+    sceneIndex++;
+
+    if(sceneIndex >= scenes.length)
+        sceneIndex = 0;
+
+    document.getElementById(
+        "sceneName"
+    ).textContent =
+    scenes[sceneIndex];
+
+    dialog.innerHTML =
+    scenes[sceneIndex] +
+    " 씬으로 이동했습니다.";
+
+});
+
+</script>
 
 </body>
 </html>
