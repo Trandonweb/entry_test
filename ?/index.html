@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>엔트리 사이트 iframe 테스트</title>
+
+<style>
+body{
+    margin:0;
+    background:#0f0f14;
+    color:white;
+    font-family:sans-serif;
+}
+
+header{
+    padding:15px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    background:linear-gradient(90deg,#00c853,#64dd17);
+}
+
+.info{
+    padding:15px;
+    text-align:center;
+    color:#ccc;
+}
+
+iframe{
+    width:100%;
+    height:calc(100vh - 110px);
+    border:none;
+}
+</style>
+</head>
+<body>
+
+<header>엔트리 사이트 iframe 테스트</header>
+
+<div class="info">
+    playentry.org 전체 사이트를 iframe으로 띄우는 테스트
+</div>
+
+<iframe
+    src="https://playentry.org"
+    allowfullscreen>
+</iframe>
+
+</body>
+</html>
